@@ -9,6 +9,8 @@ wss.on("connection", function (socket) {
   }, 5000);
 
   socket.on("message", (e) => {
-    console.log(e.toString());
+    if(e.toString() === "raja dhar"){
+       socket.send("salami de raja ") 
+    }
   });
 });
