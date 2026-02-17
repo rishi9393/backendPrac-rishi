@@ -5,12 +5,12 @@ const wss = new WebSocketServer({ port: 8000 });
 wss.on("connection", function (socket) {
   console.log("socket Connected");
   setInterval(() => {
-    socket.send("raja dhar");
+    socket.send("Maje Maje");
   }, 5000);
 
   socket.on("message", (e) => {
-    if(e.toString() === "raja dhar"){
-       socket.send("salami de raja ") 
+    if (e.toString() === "Maje Maje") {
+      socket.send("salami de raja ");
     }
   });
 });
