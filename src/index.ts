@@ -2,15 +2,23 @@ import { WebSocketServer } from "ws";
 
 const wss = new WebSocketServer({ port: 8000 });
 
-wss.on("connection", function (socket) {
-  console.log("socket Connected");
-  setInterval(() => {
-    socket.send("Maje Maje");
-  }, 5000);
+let count = 0;
+let allSockets = [];
 
-  socket.on("message", (e) => {
-    if (e.toString() === "Maje Maje") {
-      socket.send("salami de raja ");
+wss.on("connection", (socket) => {
+  allSockets.push(socket);
+
+  count = count + 1;
+  console.log("the server is connected : and the count is : " + count);
+
+  socket.on("message", (message) => {
+    console.log("message received" + message.toString());
+    for(let i = 0 ; i < allSockets.length;i++ ){
+      const s =  allSockets[i];
+       s?.send(message  )
     }
+    setTimeout(() => {
+      socket.send(message.toString() +" "+  "message from server sended");
+    },1000);
   });
 });
