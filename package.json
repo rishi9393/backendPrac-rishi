@@ -14,5 +14,14 @@
     "@types/ws": "^8.18.1",
     "typescript": "^5.9.3",
     "ws": "^8.19.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rishi9393/backendPrac-rishi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rishi9393/backendPrac-rishi/issues"
+  },
+  "homepage": "https://github.com/rishi9393/backendPrac-rishi#readme"
 }
