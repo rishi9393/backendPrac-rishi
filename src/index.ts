@@ -1,3 +1,4 @@
+import ts from "typescript";
 import { WebSocketServer, WebSocket } from "ws";
 
 const wss = new WebSocketServer({ port: 8000 });
@@ -14,7 +15,7 @@ let allSockets: User[] = [];
 
 wss.on("connection", (socket) => {
   socket.on("message", (message) => {
-    const parseMessage = JSON.parse(message);
+    const parseMessage = JSON.parse(message.toString());
     if (parseMessage.type == "join") {
       allSockets.push({
         socket,
@@ -24,17 +25,23 @@ wss.on("connection", (socket) => {
 
     if (parseMessage.type == "chat") {
       // const currentUerRoom =  allSockets.find((x)=> x.socket == socket).room
+
       let currentUerRoom = null;
-      for (let i = 0; i < allSockets.length; i++) {
-        if(allSockets[i].socket == socket){
-            currentUerRoom = allSockets[i].room;
+      for (const user of allSockets) {
+        if (user.socket == socket) {
+          currentUerRoom = user.room;
+        }
+      }
+      for (const user of allSockets) {
+        if (user.room == currentUerRoom) {
+          user.socket.send(parseMessage.payload.message);
         }
       }
     }
   });
 
-  socket.on("disconnect", () => {
-    allSockets = allSockets.filter((x) => x != socket);
+  socket.on("close", () => {
+    allSockets = allSockets.filter((x) => x.socket != socket);
   });
 
   // allSockets.push(socket);
