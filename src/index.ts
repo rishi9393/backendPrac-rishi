@@ -44,18 +44,18 @@ wss.on("connection", (socket) => {
     allSockets = allSockets.filter((x) => x.socket != socket);
   });
 
-  // allSockets.push(socket);
+  allSockets.push(socket);
 
-  // count = count + 1;
-  // console.log("the server is connected : and the count is : " + count);
+  count = count + 1;
+  console.log("the server is connected : and the count is : " + count);
 
-  // socket.on("message", (message) => {
-  //   console.log("message received" + message.toString());
-  //   for (const s of allSockets) {
-  //     s.send(message.toString() + ": send from the server ");
-  //   }
-  //   setTimeout(() => {
-  //     socket.send(message.toString() + " " + "message from server sended");
-  //   }, 1000);
-  // });
+  socket.on("message", (message) => {
+    console.log("message received" + message.toString());
+    for (const s of allSockets) {
+      s.send(message.toString() + ": send from the server ");
+    }
+    setTimeout(() => {
+      socket.send(message.toString() + " " + "message from server sended");
+    }, 1000);
+  });
 });
